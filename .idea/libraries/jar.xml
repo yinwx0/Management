@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="jar">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/src/jar/mysql-connector-java-8.0.30.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/jar/flatlaf-demo-3.1.1.jar!/" />
+      <root url="file://$PROJECT_DIR$/src/jar" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+    <jarDirectory url="file://$PROJECT_DIR$/src/jar" recursive="false" />
+  </library>
+</component>
