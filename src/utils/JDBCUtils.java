@@ -21,10 +21,27 @@ public class JDBCUtils{
     public JDBCUtils(){
     }
 
+    @Deprecated
     public Connection getConn() throws SQLException{
         return DriverManager.getConnection("jdbc:mysql:///sy","root","40273939zjpzjp");
     }
 
+    public Connection getLocalConn(String database_name,String username,String password) throws SQLException{
+        return DriverManager.getConnection("jdbc:mysql:///" + database_name,username,password);
+    }
+
+    /**
+     * @param destination_host_username                "root"
+     * @param destination_host_ip                      "8.130.86.187"
+     * @param destination_host_port                    22
+     * @param destination_host_password                "111111aA"
+     * @param destination_host_mysql_username          "root"
+     * @param destination_host_mysql_database_name     ""
+     * @param destination_host_mysql_database_password "admin"
+     * @param destination_host_mysql_host_ip           "127.0.0.1"
+     * @param destination_host_mysql_host_port         3306
+     * @return ssh connection
+     */
     public Connection getRemoteConn(
             String destination_host_username,
             String destination_host_ip,
@@ -35,39 +52,30 @@ public class JDBCUtils{
             String destination_host_mysql_database_password,
             String destination_host_mysql_host_ip,
             int destination_host_mysql_host_port
-            ){
+    ){
         Connection connection = null;
         try{
             JSch jsch = new JSch();
-//            String detionnation_name = "root";
-//            String detionnation_host = "8.130.86.187";
-//            int detionnation_port = 22;
             Session session = jsch.getSession(
                     destination_host_username,
                     destination_host_ip,
                     destination_host_port
             );
-//            String detionnation_pwd = "111111aA";
             session.setPassword(destination_host_password);
             session.setConfig("StrictHostKeyChecking","no");
             session.connect();
-//                int forward_mysql_port = 22;
-            String mysql_host = "127.0.0.1";
-            int mysql_port = 3306;
             int bindPort = session.setPortForwardingL(
                     "localhost",
                     destination_host_port,
                     destination_host_mysql_host_ip,
                     destination_host_mysql_host_port
             );
-//                String mysql_database = "tutorials";
-//                String mysql_user = "root";
-//                String mysql_pwd = "admin";
             Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection(
                     "jdbc:mysql://localhost:" + bindPort + "/" + destination_host_mysql_database_name + "?useSSL=false&autoReconnect=true",
                     destination_host_mysql_username,
-                    destination_host_mysql_database_password);
+                    destination_host_mysql_database_password
+            );
             if(connection.isValid(3)){
                 System.out.println("************数据库连接成功***********");
                 return connection;

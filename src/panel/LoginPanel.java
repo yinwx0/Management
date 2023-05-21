@@ -1,11 +1,15 @@
 package panel;
 
+import lombok.Data;
+
 import javax.swing.*;
 import java.awt.*;
 
 /**
  * @author Zhai Jinpei
  */
+@SuppressWarnings("all")
+@Data
 public class LoginPanel extends JPanel{
     public JButton getLogin(){
         return login;
@@ -34,8 +38,6 @@ public class LoginPanel extends JPanel{
     protected void paintComponent(Graphics g){
         super.paintComponent(g);
         g.drawImage(new ImageIcon("src/img/1684150268080.gif").getImage(),0,-30,this);
-//        g.setColor(new Color(0x0E0D0D));
-//        g.fillRect(0,0,479,250);
     }
 
     public Integer no(){
@@ -73,9 +75,9 @@ public class LoginPanel extends JPanel{
         add(password);
         password.setForeground(Color.WHITE);
         add(noi);
-        noi.setForeground(Color.white);
+        noi.setForeground(Color.black);
         add(passwordi);
-        passwordi.setForeground(Color.white);
+        passwordi.setForeground(Color.black);
         add(login);
         login.setForeground(Color.WHITE);
         add(exit);

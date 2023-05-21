@@ -7,6 +7,7 @@ import javax.swing.*;
  */
 public class MenuPanel extends JPanel{
     JFileChooser jFileChooser = new JFileChooser();
+
     public MenuPanel(){
         setSize(600,600);
         setLayout(null);

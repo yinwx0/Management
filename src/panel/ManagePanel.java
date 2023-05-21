@@ -1,5 +1,8 @@
 package panel;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -8,14 +11,17 @@ import java.awt.*;
 /**
  * @author Zhai Jinpei
  */
+@EqualsAndHashCode(callSuper=true)
+@Data
 public class ManagePanel extends JPanel{
 
     @Override
     protected void paintComponent(Graphics g){
         super.paintComponent(g);
-        g.drawImage(new ImageIcon("src/img/tadcg-ilamj.gif").getImage(),0,0,this);
-//        g.setColor(new Color(0xF6F1F1));
-//        g.fillRect(0,0,600,600);
+        g.setColor(new Color(0xF6F1F1));
+        g.fillRect(0,0,610,150);
+        g.setColor(new Color(0xDCFFD6));
+        g.fillRect(0,150,610,450);
     }
 
     JButton select = new JButton("select");
@@ -48,6 +54,9 @@ public class ManagePanel extends JPanel{
     String[] title2 = new String[]{"cno","avg score"};
     String[] title3 = new String[]{"ca","sno","name","sex"};
     String[] title4 = new String[]{"sno","all score"};
+    String[] title5 = new String[]{"cno","avg score"};
+    JTable jTable = new JTable(new DefaultTableModel(new Object[100][],title1));
+    JScrollPane jScrollPane = new JScrollPane(jTable);
 
     public String sno(){
         return sn.getText();
@@ -75,228 +84,8 @@ public class ManagePanel extends JPanel{
         return st.getText();
     }
 
-    public JComboBox<String> getjComboBox1(){
-        return jComboBox1;
-    }
-
-    public void setjComboBox1(JComboBox<String> jComboBox1){
-        this.jComboBox1 = jComboBox1;
-    }
-
-    public JComboBox<String> getjComboBox2(){
-        return jComboBox2;
-    }
-
-    public void setjComboBox2(JComboBox<String> jComboBox2){
-        this.jComboBox2 = jComboBox2;
-    }
-
-    public JComboBox<String> getjComboBox3(){
-        return jComboBox3;
-    }
-
-    public void setjComboBox3(JComboBox<String> jComboBox3){
-        this.jComboBox3 = jComboBox3;
-    }
-
-    public JComboBox<String> getjComboBox4(){
-        return jComboBox4;
-    }
-
-    public void setjComboBox4(JComboBox<String> jComboBox4){
-        this.jComboBox4 = jComboBox4;
-    }
-
-    public JComboBox<String> getjComboBox5(){
-        return jComboBox5;
-    }
-
-    public void setjComboBox5(JComboBox<String> jComboBox5){
-        this.jComboBox5 = jComboBox5;
-    }
-
-    public JComboBox<String> getjComboBox6(){
-        return jComboBox6;
-    }
-
-    public void setjComboBox6(JComboBox<String> jComboBox6){
-        this.jComboBox6 = jComboBox6;
-    }
-
-    public JButton getAll(){
-        return all;
-    }
-
-    public void setAll(JButton all){
-        this.all = all;
-    }
-
-    public JTextField getIdt(){
-        return idt;
-    }
-
-    public void setIdt(JTextField idt){
-        this.idt = idt;
-    }
-
-    public JTextField getNat(){
-        return nat;
-    }
-
-    public void setNat(JTextField nat){
-        this.nat = nat;
-    }
-
-    public JTextField getSt(){
-        return st;
-    }
-
-    public void setSt(JTextField st){
-        this.st = st;
-    }
-
-    public JButton getSelect(){
-        return select;
-    }
-
-    public String[] getTitle1(){
-        return title1;
-    }
-
-    public void setTitle1(String[] title1){
-        this.title1 = title1;
-    }
-
-    public String[] getTitle2(){
-        return title2;
-    }
-
-    public void setTitle2(String[] title2){
-        this.title2 = title2;
-    }
-
-    public String[] getTitle3(){
-        return title3;
-    }
-
-    public void setTitle3(String[] title3){
-        this.title3 = title3;
-    }
-
-    public String[] getTitle4(){
-        return title4;
-    }
-
-    public void setTitle4(String[] title4){
-        this.title4 = title4;
-    }
-
-    public String[] getTitle5(){
-        return title5;
-    }
-
-    public void setTitle5(String[] title5){
-        this.title5 = title5;
-    }
-
-    public void setSelect(JButton select){
-        this.select = select;
-    }
-
-    public JButton getInsert(){
-        return insert;
-    }
-
-    public void setInsert(JButton insert){
-        this.insert = insert;
-    }
-
-    public JButton getModify(){
-        return modify;
-    }
-
-    public void setModify(JButton modify){
-        this.modify = modify;
-    }
-
-    public JButton getDelete(){
-        return delete;
-    }
-
-    public void setDelete(JButton delete){
-        this.delete = delete;
-    }
-
-    public JButton getSort(){
-        return sort;
-    }
-
-    public void setSort(JButton sort){
-        this.sort = sort;
-    }
-
-    public JButton getAvg(){
-        return avg;
-    }
-
-    public void setAvg(JButton avg){
-        this.avg = avg;
-    }
-
-    public JTextField getSn(){
-        return sn;
-    }
-
-    public void setSn(JTextField sn){
-        this.sn = sn;
-    }
-
-    public JTextField getCn(){
-        return cn;
-    }
-
-    public void setCn(JTextField cn){
-        this.cn = cn;
-    }
-
-    public JTextField getSon(){
-        return son;
-    }
-
-    public void setSon(JTextField son){
-        this.son = son;
-    }
-
-    public JTable getjTable(){
-        return jTable;
-    }
-
-    public void setjTable(JTable jTable){
-        this.jTable = jTable;
-    }
-
-    public JScrollPane getjScrollPane(){
-        return jScrollPane;
-    }
-
-    public void setjScrollPane(JScrollPane jScrollPane){
-        this.jScrollPane = jScrollPane;
-    }
-
-    String[] title5 = new String[]{"cno","avg score"};
-    JTable jTable = new JTable(new DefaultTableModel(new Object[100][],title1));
-    JScrollPane jScrollPane = new JScrollPane(jTable);
-
-    public JButton getCls(){
-        return cls;
-    }
-
-    public void setCls(JButton cls){
-        this.cls = cls;
-    }
-
     public ManagePanel(){
-        setSize(600,600);
+        setSize(620,600);
         setLayout(null);
         select.setBounds(0,0,75,30);
         jComboBox1.setBounds(75,0,75,30);
@@ -325,13 +114,13 @@ public class ManagePanel extends JPanel{
         sex.setBounds(400,90,50,30);
         st.setBounds(450,90,150,30);
         jScrollPane.setViewportView(jTable);
-        jScrollPane.setBounds(0,140,590,460);
+        jScrollPane.setBounds(0,140,610,460);
         jScrollPane.setOpaque(false);
         jScrollPane.getViewport().setOpaque(false);
         jTable.setFont(new Font("微软雅黑",Font.BOLD,16));
         jTable.setOpaque(false);
         jTable.setOpaque(false);
-        jTable.setForeground(new Color(0xC700C7));
+        jTable.setForeground(new Color(0x960E0D0D,true));
         DefaultTableCellRenderer render = new DefaultTableCellRenderer();
         render.setOpaque(false);
         jTable.setDefaultRenderer(Object.class,render);

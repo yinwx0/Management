@@ -10,8 +10,13 @@ import java.sql.SQLException;
  */
 public class JDBCUtilsTest{
     JDBCUtils jdbcUtils = new JDBCUtils();
+
     @Test
     public void getConn() throws SQLException{
-        jdbcUtils.getConn();
+        jdbcUtils.getLocalConn("sy","root","40273939zjpzjp");
+    }
+
+    @Test
+    public void getRemoteConn(){
     }
 }

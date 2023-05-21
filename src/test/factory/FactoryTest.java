@@ -6,11 +6,10 @@ import org.junit.jupiter.api.Test;
 /**
  * @author Zhai Jinpei
  */
-public class ReturnClassFactoryTest{
-    Factory returnClassFactory = new Factory();
+public class FactoryTest{
 
     @Test
     public void adminDAO(){
-        returnClassFactory.AdminImpl();
+        Factory.adminImpl();
     }
 }
