@@ -376,7 +376,7 @@ public class AdminServiceImpl implements AdminService{
                 "select sno from stu where sno = ? ",
                 stu.getSno()
         );
-        boolean f = objects.length > 0;
+        boolean f = objects != null && objects.length > 0;
         if(
                 !f &&
                         !stu.getSno().equals("") &&
@@ -404,7 +404,7 @@ public class AdminServiceImpl implements AdminService{
                 sc.getSno(),
                 sc.getCno()
         );
-        boolean f = objects.length > 0;
+        boolean f = objects != null && objects.length > 0;
         if(
                 !f &&
                         !sc.getSno().equals("") &&
@@ -430,7 +430,7 @@ public class AdminServiceImpl implements AdminService{
                 stu.getSno()
         );
         if(
-                objects.length > 0 && !(
+                objects != null && objects.length > 0 && !(
                         stu.getCa().equals("") &&
                                 stu.getName().equals("") &&
                                 stu.getSex().equals("")
@@ -494,7 +494,7 @@ public class AdminServiceImpl implements AdminService{
                 sc.getSno(),
                 sc.getCno()
         );
-        if(objects.length > 0){
+        if(objects != null && objects.length > 0){
             scDAO.modify(
                     "update s_c set score = ? where sno = ? and cno = ?",
                     sc.getScore(),
@@ -648,10 +648,13 @@ public class AdminServiceImpl implements AdminService{
     public void deleteScore(SC sc) throws SQLException{
         if(sc.getCno() == null && !sc.getSno().equals("")){
             scDAO.delete("delete from s_c where sno = ?",sc.getSno());
+            JOptionPane.showMessageDialog(null,"OK");
         }else if(sc.getSno() == null && sc.getCno() != null){
             scDAO.delete("delete from s_c where cno = ?",sc.getCno());
+            JOptionPane.showMessageDialog(null,"OK");
         }else if(sc.getCno() != null && !sc.getSno().equals("")){
             scDAO.delete("delete from s_c where cno = ? and sno = ?",sc.getCno(),sc.getSno());
+            JOptionPane.showMessageDialog(null,"OK");
         }else{
             JOptionPane.showMessageDialog(null,"null input");
         }
