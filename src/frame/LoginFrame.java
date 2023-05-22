@@ -28,6 +28,9 @@ public class LoginFrame extends JFrame{
             setContentPane(loginPanel);
             loginPanel.setVisible(true);
             loginPanel.getLogin().addActionListener(e->{
+                if(loginPanel.getjComboBox().getSelectedIndex() == 1){
+                    Factory.state = 1;
+                }
                 try{
                     if(Factory.Serv().checkLogin(new Admin(loginPanel.no(),loginPanel.password()))){
                         JOptionPane.showMessageDialog(this,"Success");

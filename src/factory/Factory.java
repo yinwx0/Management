@@ -9,27 +9,31 @@ import org.jetbrains.annotations.NotNull;
 import service.AdminServiceImpl;
 import utils.JDBCUtils;
 
+import java.sql.SQLException;
+
 /**
  * @author Zhai Jinpei
  */
 public class Factory{
+    public static int state;
+
     @Contract(" -> new")
     public static @NotNull AdminDAOImpl adminImpl(){
         return new AdminDAOImpl();
     }
 
     @Contract(" -> new")
-    public static @NotNull AdminDAOImpl stuImpl(){
+    public static @NotNull AdminDAOImpl stuImpl() throws SQLException{
         return new StuDAOImpl();
     }
 
     @Contract(" -> new")
-    public static @NotNull AdminDAOImpl scImpl(){
+    public static @NotNull AdminDAOImpl scImpl() throws SQLException{
         return new ScDAOImpl();
     }
 
     @Contract(" -> new")
-    public static @NotNull AdminDAOImpl couImpl(){
+    public static @NotNull AdminDAOImpl couImpl() throws SQLException{
         return new CouDAOImpl();
     }
 
@@ -39,7 +43,7 @@ public class Factory{
     }
 
     @Contract(value=" -> new", pure=true)
-    public static @NotNull AdminServiceImpl Serv(){
+    public static @NotNull AdminServiceImpl Serv() throws SQLException{
         return new AdminServiceImpl();
     }
 }

@@ -1,7 +1,5 @@
 package service;
 
-import dao.impl.AdminDAOImpl;
-import factory.Factory;
 import model.Admin;
 import model.SC;
 import model.Stu;
@@ -12,10 +10,8 @@ import java.sql.SQLException;
  * @author Zhai Jinpei
  */
 public interface AdminService{
-    AdminDAOImpl adminDAO = Factory.adminImpl();
-    AdminDAOImpl stuDAO = Factory.stuImpl();
-    AdminDAOImpl scDAO = Factory.scImpl();
-    AdminDAOImpl couDAO = Factory.couImpl();
+    int state = 0;
+
 
     boolean checkLogin(Admin admin) throws SQLException;
 

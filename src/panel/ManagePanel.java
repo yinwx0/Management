@@ -1,6 +1,5 @@
 package panel;
 
-import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.swing.*;
@@ -12,7 +11,7 @@ import java.awt.*;
  * @author Zhai Jinpei
  */
 @EqualsAndHashCode(callSuper=true)
-@Data
+
 public class ManagePanel extends JPanel{
 
     @Override
@@ -58,6 +57,115 @@ public class ManagePanel extends JPanel{
     JTable jTable = new JTable(new DefaultTableModel(new Object[100][],title1));
     JScrollPane jScrollPane = new JScrollPane(jTable);
 
+
+    public JButton getSelect(){
+        return select;
+    }
+
+    public JComboBox<String> getJComboBox1(){
+        return jComboBox1;
+    }
+
+    public JComboBox<String> getJComboBox2(){
+        return jComboBox2;
+    }
+
+    public JComboBox<String> getJComboBox3(){
+        return jComboBox3;
+    }
+
+    public JComboBox<String> getJComboBox4(){
+        return jComboBox4;
+    }
+
+    public JComboBox<String> getJComboBox5(){
+        return jComboBox5;
+    }
+
+    public JComboBox<String> getJComboBox6(){
+        return jComboBox6;
+    }
+
+    public JButton getInsert(){
+        return insert;
+    }
+
+    public JButton getModify(){
+        return modify;
+    }
+
+    public JButton getDelete(){
+        return delete;
+    }
+
+    public JButton getSort(){
+        return sort;
+    }
+
+    public JButton getAvg(){
+        return avg;
+    }
+
+    public JButton getAll(){
+        return all;
+    }
+
+    public JButton getCls(){
+        return cls;
+    }
+
+    public JTextField getSn(){
+        return sn;
+    }
+
+    public JTextField getCn(){
+        return cn;
+    }
+
+    public JTextField getSon(){
+        return son;
+    }
+
+    public JTextField getIdt(){
+        return idt;
+    }
+
+    public JTextField getNat(){
+        return nat;
+    }
+
+    public JTextField getSt(){
+        return st;
+    }
+
+    public String[] getTitle1(){
+        return title1;
+    }
+
+    public String[] getTitle2(){
+        return title2;
+    }
+
+    public String[] getTitle3(){
+        return title3;
+    }
+
+    public String[] getTitle4(){
+        return title4;
+    }
+
+    public String[] getTitle5(){
+        return title5;
+    }
+
+    public JTable getJTable(){
+        return jTable;
+    }
+
+    public JScrollPane getJScrollPane(){
+        return jScrollPane;
+    }
+
     public String sno(){
         return sn.getText();
     }
@@ -94,7 +202,7 @@ public class ManagePanel extends JPanel{
         modify.setBounds(300,0,75,30);
         jComboBox3.setBounds(375,0,75,30);
         delete.setBounds(450,0,75,30);
-        jComboBox4.setBounds(525,0,60,30);
+        jComboBox4.setBounds(525,0,70,30);
         sno.setBounds(0,30,50,30);
         sn.setBounds(50,30,150,30);
         cno.setBounds(200,30,50,30);

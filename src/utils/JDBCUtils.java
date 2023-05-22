@@ -3,13 +3,19 @@ package utils;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
+import factory.Factory;
 
 import java.sql.*;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * @author Zhai Jinpei
  */
 public class JDBCUtils{
+    private Session session = null;
+    private final Lock lock = new ReentrantLock();
+
     static{
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -56,7 +62,7 @@ public class JDBCUtils{
         Connection connection = null;
         try{
             JSch jsch = new JSch();
-            Session session = jsch.getSession(
+            session = jsch.getSession(
                     destination_host_username,
                     destination_host_ip,
                     destination_host_port
@@ -71,40 +77,93 @@ public class JDBCUtils{
                     destination_host_mysql_host_port
             );
             Class.forName("com.mysql.cj.jdbc.Driver");
-            connection = DriverManager.getConnection(
+            return connection = DriverManager.getConnection(
                     "jdbc:mysql://localhost:" + bindPort + "/" + destination_host_mysql_database_name + "?useSSL=false&autoReconnect=true",
                     destination_host_mysql_username,
                     destination_host_mysql_database_password
             );
-            if(connection.isValid(3)){
-                System.out.println("************数据库连接成功***********");
-                return connection;
-            }else{
-                System.out.println("************数据库连接失败***********");
-                return connection;
-            }
         }catch(SQLException | JSchException e){
             e.printStackTrace();
         }catch(ClassNotFoundException e){
             throw new RuntimeException(e);
         }
-        return connection;
+        return null;
     }
 
-    public ResultSet select(Connection connection,String sql,Object... objects) throws SQLException{
-        PreparedStatement preparedStatement = connection.prepareStatement(sql);
-        for(int j = 1;j <= objects.length;j++)
-            preparedStatement.setObject(j,objects[j - 1]);
-        return preparedStatement.executeQuery();
+    public Object[][] select(String sql,Object... objects) throws SQLException{
+        lock.lock();
+        try{
+            Connection connection = getLocalConn("sy","root","40273939zjpzjp");
+            if(Factory.state == 1){
+                connection.close();
+                Thread.sleep(1000);
+                connection = getRemoteConn(
+                        "root",
+                        "8.130.86.187",
+                        22,
+                        "111111aA",
+                        "root",
+                        "sy",
+                        "admin",
+                        "127.0.0.1",
+                        3306
+                );
+                System.out.println("Remote Mode");
+            }
+            PreparedStatement preparedStatement = connection.prepareStatement(sql,ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_READ_ONLY);
+            for(int j = 1;j <= objects.length;j++)
+                preparedStatement.setObject(j,objects[j - 1]);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
+            int c = resultSetMetaData.getColumnCount();
+            Object[][] objects1 = new Object[100][c];
+            int j = 0;
+            while(resultSet.next()){
+                for(int i = 0;i < c;i++){
+                    objects1[j][i] = resultSet.getObject(i + 1);
+                }
+                j++;
+            }
+            resultSet.close();
+            connection.close();
+            session.disconnect();
+            return objects1;
+        }catch(InterruptedException e){
+            throw new RuntimeException(e);
+        }finally{
+            lock.unlock();
+        }
     }
 
-    public int Update(Connection connection,String sql,Object... objects) throws SQLException{
-        PreparedStatement preparedStatement = connection.prepareStatement(sql);
-        for(int j = 1;j <= objects.length;j++)
-            preparedStatement.setObject(j,objects[j - 1]);
-        int i = preparedStatement.executeUpdate();
-        preparedStatement.close();
-        connection.close();
-        return i;
+    public int Update(String sql,Object... objects) throws SQLException{
+        lock.lock();
+        try{
+            Connection connection = getLocalConn("sy","root","40273939zjpzjp");
+            if(Factory.state == 1){
+                connection.close();
+                connection = getRemoteConn(
+                        "root",
+                        "8.130.86.187",
+                        22,
+                        "111111aA",
+                        "root",
+                        "sy",
+                        "admin",
+                        "127.0.0.1",
+                        3306
+                );
+                System.out.println("Remote Mode");
+            }
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            for(int j = 1;j <= objects.length;j++)
+                preparedStatement.setObject(j,objects[j - 1]);
+            int i = preparedStatement.executeUpdate();
+            preparedStatement.close();
+            connection.close();
+            session.disconnect();
+            return i;
+        }finally{
+            lock.unlock();
+        }
     }
 }

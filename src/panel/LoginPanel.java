@@ -11,6 +11,10 @@ import java.awt.*;
 @SuppressWarnings("all")
 @Data
 public class LoginPanel extends JPanel{
+    public JComboBox<String> getjComboBox(){
+        return jComboBox;
+    }
+
     public JButton getLogin(){
         return login;
     }
@@ -33,7 +37,7 @@ public class LoginPanel extends JPanel{
     JButton exit = new JButton("exit");
     JTextField noi = new JTextField();
     JPasswordField passwordi = new JPasswordField();
-
+    JComboBox<String> jComboBox = new JComboBox<>(new String[]{"本地","远程"});
     @Override
     protected void paintComponent(Graphics g){
         super.paintComponent(g);
@@ -56,8 +60,9 @@ public class LoginPanel extends JPanel{
         password.setBounds(50,100,80,30);
         noi.setBounds(150,40,280,30);
         passwordi.setBounds(150,100,280,30);
-        login.setBounds(150,160,80,30);
-        exit.setBounds(250,160,80,30);
+        login.setBounds(100,160,80,30);
+        jComboBox.setBounds(200,160,80,30);
+        exit.setBounds(300,160,80,30);
         no.setOpaque(false);
         no.setFont(new Font("微软雅黑",Font.BOLD,20));
         noi.setOpaque(false);
@@ -80,6 +85,7 @@ public class LoginPanel extends JPanel{
         passwordi.setForeground(Color.black);
         add(login);
         login.setForeground(Color.WHITE);
+        add(jComboBox);
         add(exit);
         exit.setForeground(Color.WHITE);
     }

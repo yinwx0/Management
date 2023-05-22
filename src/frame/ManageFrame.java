@@ -150,23 +150,33 @@ public class ManageFrame extends JFrame{
                     if(!(managePanel.sex().equals("男") || managePanel.sex().equals("女"))){
                         JOptionPane.showMessageDialog(null,"invalid input");
                     }else{
-                        try{
-                            Factory.Serv().deleteStu(
-                                    new Stu(
-                                            managePanel.id(),
-                                            managePanel.sno(),
-                                            managePanel.name(),
-                                            managePanel.sex()
-                                    )
-                            );
-                        }catch(SQLException ex){
-                            throw new RuntimeException(ex);
+                        if(
+                                managePanel.id().equals("") &&
+                                        managePanel.sno().equals("") &&
+                                        managePanel.name().equals("") &&
+                                        managePanel.sex().equals("")
+                        ){
+                            JOptionPane.showMessageDialog(null,"null input");
+                        }else{
+                            try{
+                                Factory.Serv().deleteStu(
+                                        new Stu(
+                                                managePanel.id(),
+                                                managePanel.sno(),
+                                                managePanel.name(),
+                                                managePanel.sex()
+                                        )
+                                );
+                                JOptionPane.showMessageDialog(this,"OK");
+                            }catch(SQLException ex){
+                                throw new RuntimeException(ex);
+                            }
                         }
                     }
                 }
                 case 1 -> {
                     try{
-                        if(!(managePanel.sno().equals("") || managePanel.cno() == null)){
+                        if(!managePanel.sno().equals("") || managePanel.cno() != null){
                             Factory.Serv().deleteScore(
                                     new SC(
                                             managePanel.sno(),
@@ -234,7 +244,7 @@ public class ManageFrame extends JFrame{
                                                             managePanel.cno()
                                                     )
                                             ),
-                                            managePanel.getTitle2()
+                                            managePanel.getTitle5()
                                     )
                             );
                             managePanel.getJScrollPane().repaint();
@@ -248,7 +258,11 @@ public class ManageFrame extends JFrame{
                         managePanel.getJTable().setModel(
                                 new DefaultTableModel(
                                         Factory.Serv().selectAllCourseAvgScore(
-                                                new SC()
+                                                new SC(
+                                                        managePanel.sno(),
+                                                        managePanel.cno(),
+                                                        managePanel.score()
+                                                )
                                         ),
                                         managePanel.getTitle2()
                                 )
