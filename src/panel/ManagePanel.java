@@ -6,6 +6,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.util.regex.Pattern;
 
 /**
  * @author Zhai Jinpei
@@ -242,6 +243,17 @@ public class ManagePanel extends JPanel{
         add(jComboBox4);
         add(sno);
         add(sn);
+        sn.addActionListener(e->{
+            try{
+                double parsed = Double.parseDouble(sn.getText());
+                if(parsed > 9_999_999_999d || parsed < 1_000_000_000d){
+                    JOptionPane.showMessageDialog(this,"invalid input");
+                }
+            }catch(NumberFormatException ex){
+                JOptionPane.showMessageDialog(this,"invalid input");
+                throw new RuntimeException(ex);
+            }
+        });
         add(cno);
         add(cn);
         add(score);
@@ -254,10 +266,58 @@ public class ManagePanel extends JPanel{
         add(cls);
         add(id);
         add(idt);
+        idt.addActionListener(e->{
+            String regex = "(?:(?:19[0-9]\\d)|(?:[2-9]\\d{3}))(?:0[1-9]|1[012])(?:0[1-9]|[12]\\d|3[01])\\d{3}[\\dXx]";
+            if(!Pattern.matches(regex,idt.getText()) && !verifyIdCardCheckCode(idt.getText())){
+                JOptionPane.showMessageDialog(this,"invalid input");
+            }
+        });
         add(name);
         add(nat);
         add(sex);
         add(st);
         add(jScrollPane);
     }
+
+    /**
+     * 验证身份证号码的校验码是否正确
+     *
+     * @param idCardNumber 身份证号码
+     * @return 校验结果，true表示校验通过，false表示校验失败
+     */
+    public static boolean verifyIdCardCheckCode(String idCardNumber){
+        // 身份证号码长度必须为18位
+        if(idCardNumber.length() != 18){
+            return false;
+        }
+
+        // 校验码只可能是0~9或X（大写）
+        char lastChar = idCardNumber.charAt(17);
+        if(!Character.isDigit(lastChar) && lastChar != 'X'){
+            return false;
+        }
+
+        // 计算校验码
+        int sum = 0;
+        for(int i = 0;i < 17;i++){
+            char c = idCardNumber.charAt(i);
+            if(!Character.isDigit(c)){
+                return false;
+            }
+            int digit = c - '0';
+            int weight = WEIGHT_FACTOR[i];
+            sum += digit * weight;
+        }
+        int remainder = sum % 11;
+        char expectedCheckCode = CHECK_CODE[remainder];
+
+        // 检查校验码是否一致
+        return expectedCheckCode == lastChar;
+    }
+
+    // 权重因子数组
+    private static final int[] WEIGHT_FACTOR = {7,9,10,5,8,4,2,1,6,3,7,9,10,5,8,4,2};
+
+    // 校验码数组
+    private static final char[] CHECK_CODE = {'1','0','X','9','8','7','6','5','4','3','2'};
 }
