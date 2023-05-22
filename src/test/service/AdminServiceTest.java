@@ -18,4 +18,16 @@ public class AdminServiceTest{
             System.out.println();
         }
     }
+
+    @Test
+    public void selectAllStuAllScore() throws SQLException{
+//        Object[][] objects = Factory.adminImpl().select("select sno from stu");
+        Object[][] objects1 = Factory.adminImpl().select("select score from s_c where sno = '2205221123'");
+//        JDBCUtilsTest.p(objects1);
+        double c = 0;
+        for(Object[] objects2: objects1){
+            c += (double)objects2[0];
+        }
+        System.out.println(c);
+    }
 }

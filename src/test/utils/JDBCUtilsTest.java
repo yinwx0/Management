@@ -41,7 +41,7 @@ public class JDBCUtilsTest{
         p(objects2);
     }
 
-    public void p(Object[][] objects){
+    public static void p(Object[][] objects){
         for(Object[] objects1: objects){
             for(Object o: objects1){
                 System.out.print(o + " ");

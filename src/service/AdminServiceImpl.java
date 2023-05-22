@@ -257,26 +257,36 @@ public class AdminServiceImpl implements AdminService{
     @Override
     public Object[][] selectAllStuAllScore(SC sc) throws SQLException{
         Object[][] objects = scDAO.select("select sno from stu");
-        Object[][] objects1;
+        Object[][] objects1 = new Object[1][2];
         if(
-                sc.getSno().equals("")
+                sc.getSno().equals("") && objects.length >= 1
         ){
-            objects = new Object[objects.length][2];
+            objects1 = new Object[objects.length][2];
             int q = 0;
             for(Object[] o: objects){
-                objects[q][0] = o[0];
-                objects[q++][1] = scDAO.select(
+                objects1[q][0] = o[0];
+                Object[][] o1 = scDAO.select(
                         "select score from s_c where sno = ?",
                         o[0]
                 );
+                double c = 0;
+                if(o1 != null){
+                    for(Object[] objects2: o1) c += (double)objects2[0];
+                    objects1[q][1] = c;
+                }
+                q++;
             }
         }else{
-            objects = scDAO.select(
+            Object[][] o1 = scDAO.select(
                     "select score from s_c where sno = ?",
                     sc.getSno()
             );
+            objects1[0][0] = sc.getSno();
+            double c = 0;
+            for(Object[] objects2: o1) c += (double)objects2[0];
+            objects1[0][1] = c;
         }
-        return objects;
+        return objects1;
     }
 
     @Override
@@ -285,28 +295,50 @@ public class AdminServiceImpl implements AdminService{
         int i = objects.length;
         Object[][] objects1 = new Object[i][2];
         if(sc.getCno() == null){
-            int i1 = 0;
+            int k = 0;
             for(Object[] o: objects){
-                objects1[i1][0] = o[0];
-                objects1[i1++][1] = scDAO.select(
+                objects1[k][0] = o[0];
+                Object[][] objects2 = scDAO.select(
                         "select score from s_c where cno = ?",
                         o[0]
                 );
+                double s = 0d;
+                if(objects2 != null){
+                    for(Object[] objects3: objects2){
+                        s += (double)objects3[0];
+                    }
+                    s /= objects2.length;
+                    objects1[k++][1] = s;
+                }
             }
         }else{
-            objects1 = scDAO.select(
+            Object[][] objects2 = scDAO.select(
                     "select score from s_c where cno = ?",
                     sc.getCno()
             );
+            double s = 0d;
+            objects1[0][0] = sc.getCno();
+            if(objects2 != null){
+                for(Object[] objects3: objects2){
+                    s += (double)objects3[0];
+                }
+                s /= objects2.length;
+
+                objects1[0][1] = s;
+            }
         }
         return objects1;
     }
 
     @Override
     public Object[][] sortAllStuAllScore(SC sc) throws SQLException{
-        Object[][] objects = selectAllStuAllScore(new SC("",0,0d));
+        Object[][] objects = selectAllStuAllScore(sc);
+        O:
         for(int i = 0;i < objects.length - 1;i++){
+            if(objects[i][1] == null) continue O;
+            I:
             for(int j = i + 1;j < objects.length;j++){
+                if(objects[j][1] == null) continue I;
                 if((Double)objects[i][1] < (Double)objects[j][1]){
                     double t = (Double)objects[i][1];
                     objects[i][1] = objects[j][1];
@@ -321,12 +353,14 @@ public class AdminServiceImpl implements AdminService{
     public Object[][] sortCourseAllStuScore(SC sc) throws SQLException{
         if(sc.getCno() != null){
             Object[][] objects = selectAllStuAllCourseScore(sc);
-            for(int i = 0;i < objects.length - 1;i++){
-                for(int j = i + 1;j < objects.length;j++){
-                    if((Double)objects[i][2] < (Double)objects[j][2]){
-                        Object t = objects[i][2];
-                        objects[i][2] = objects[j][2];
-                        objects[j][2] = t;
+            if(objects != null){
+                for(int i = 0;i < objects.length - 1;i++){
+                    for(int j = i + 1;j < objects.length;j++){
+                        if((Double)objects[i][2] < (Double)objects[j][2]){
+                            Object t = objects[i][2];
+                            objects[i][2] = objects[j][2];
+                            objects[j][2] = t;
+                        }
                     }
                 }
             }
