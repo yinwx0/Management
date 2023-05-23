@@ -68,7 +68,15 @@ public class ManageFrame extends JFrame{
         managePanel.getInsert().addActionListener(e->{
             switch(managePanel.getJComboBox2().getSelectedIndex()){
                 case 0 -> {
-                    if(!(managePanel.sex().equals("男") || managePanel.sex().equals("女"))){
+                    if(
+                            !(
+                                    ManagePanel.verifyIdCardCheckCode(
+                                            managePanel.id()) &&
+                                            (managePanel.sex().equals("男") ||
+                                                    managePanel.sex().equals("女")
+                                            )
+                            )
+                    ){
                         JOptionPane.showMessageDialog(null,"invalid input");
                     }else{
                         try{
@@ -103,7 +111,7 @@ public class ManageFrame extends JFrame{
         managePanel.getModify().addActionListener(e->{
             switch(managePanel.getJComboBox3().getSelectedIndex()){
                 case 0 -> {
-                    if(!(managePanel.sex().equals("男") || managePanel.sex().equals("女"))){
+                    if(!(ManagePanel.verifyIdCardCheckCode(managePanel.id()) && (managePanel.sex().equals("男") || managePanel.sex().equals("女")))){
                         JOptionPane.showMessageDialog(null,"invalid input");
                     }else{
                         if(managePanel.sno() != null){
