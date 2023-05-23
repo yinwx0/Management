@@ -13,7 +13,7 @@ import org.eclipse.swt.widgets.Shell;
 import javax.swing.*;
 
 public class SWTest{
-    public SWTest() throws UnsupportedLookAndFeelException{
+    public SWTest(String url) throws UnsupportedLookAndFeelException{
         UIManager.setLookAndFeel(new FlatGitHubContrastIJTheme());
         SwingUtilities.invokeLater(()->{
             Display display = new Display();
@@ -21,7 +21,11 @@ public class SWTest{
             shell.setBounds(-8,-5,1936,1095);
             Browser browser = new Browser(shell,SWT.FILL);
             browser.setBounds(0,0,1936,1095);
-            browser.setUrl("https://www.bing.com");
+            if(url == null || url.equals("")){
+                browser.setUrl("https://www.bing.com");
+            }else{
+                browser.setUrl(url);
+            }
             shell.open();
             while(!shell.isDisposed()){
                 if(!display.readAndDispatch())
@@ -33,6 +37,6 @@ public class SWTest{
 
     @SuppressWarnings("all")
     public static void main(String[] args) throws UnsupportedLookAndFeelException{
-        new SWTest();
+        new SWTest(null);
     }
 }
