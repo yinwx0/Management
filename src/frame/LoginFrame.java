@@ -32,16 +32,17 @@ public class LoginFrame extends JFrame{
                 if(loginPanel.getjComboBox().getSelectedIndex() == 1){
                     Factory.state = 1;
                     PropertiesFrame jFrame = new PropertiesFrame(0);
+                    LoginFrame.this.dispose();
                     jFrame.getDestination_host_mysql_host_port().addActionListener(e1->{
-                                if(!(
-                                        jFrame.getDestination_host_username().getText().equals("") &&
-                                                jFrame.getDestination_host_ip().getText().equals("") &&
-                                                jFrame.getDestination_host_port().getText().equals("") &&
-                                                String.valueOf(jFrame.getDestination_host_password().getPassword()).equals("") &&
-                                                jFrame.getDestination_host_mysql_username().getText().equals("") &&
-                                                jFrame.getDestination_host_mysql_database_name().getText().equals("") &&
-                                                String.valueOf(jFrame.getDestination_host_mysql_database_password().getPassword()).equals("") &&
-                                                jFrame.getDestination_host_mysql_host_ip().getText().equals("") &&
+                        if(!(
+                                jFrame.getDestination_host_username().getText().equals("") &&
+                                        jFrame.getDestination_host_ip().getText().equals("") &&
+                                        jFrame.getDestination_host_port().getText().equals("") &&
+                                        String.valueOf(jFrame.getDestination_host_password().getPassword()).equals("") &&
+                                        jFrame.getDestination_host_mysql_username().getText().equals("") &&
+                                        jFrame.getDestination_host_mysql_database_name().getText().equals("") &&
+                                        String.valueOf(jFrame.getDestination_host_mysql_database_password().getPassword()).equals("") &&
+                                        jFrame.getDestination_host_mysql_host_ip().getText().equals("") &&
                                                 jFrame.getDestination_host_mysql_host_port().getText().equals("")
                                 )){
                                     JDBCUtils.setDh_user(jFrame.getDestination_host_username().getText());
@@ -72,16 +73,17 @@ public class LoginFrame extends JFrame{
                     );
                 }else{
                     PropertiesFrame jFrame = new PropertiesFrame();
+                    LoginFrame.this.dispose();
                     jFrame.getPassword().addActionListener(e1->{
-                                if(!(
-                                        jFrame.getDatabasename().getText().equals("") &&
-                                                jFrame.getUsername().getText().equals("") &&
-                                                String.valueOf(jFrame.getPassword().getPassword()).equals("")
-                                )
-                                ){
-                                    JDBCUtils.setDatabase_name(jFrame.getDatabasename().getText());
-                                    JDBCUtils.setUsername(jFrame.getUsername().getText());
-                                    JDBCUtils.setPassword(String.valueOf(jFrame.getPassword().getPassword()));
+                        if(!(
+                                jFrame.getDatabasename().getText().equals("") &&
+                                        jFrame.getUsername().getText().equals("") &&
+                                        String.valueOf(jFrame.getPassword().getPassword()).equals("")
+                        )
+                        ){
+                            JDBCUtils.setDatabase_name(jFrame.getDatabasename().getText());
+                            JDBCUtils.setUsername(jFrame.getUsername().getText());
+                            JDBCUtils.setPassword(String.valueOf(jFrame.getPassword().getPassword()));
                                     try{
                                         if(Factory.Serv().checkLogin(new Admin(loginPanel.no(),loginPanel.password()))){
                                             JOptionPane.showMessageDialog(this,"Success");

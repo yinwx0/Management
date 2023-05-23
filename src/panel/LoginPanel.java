@@ -1,5 +1,6 @@
 package panel;
 
+import frame.SWTest;
 import lombok.Data;
 
 import javax.swing.*;
@@ -31,7 +32,8 @@ public class LoginPanel extends JPanel{
         this.exit = exit;
     }
 
-    JLabel no = new JLabel("No");
+    JButton browser = new JButton("help");
+    JLabel no = new JLabel("User");
     JLabel password = new JLabel("password");
     JButton login = new JButton("login");
     JButton exit = new JButton("exit");
@@ -57,6 +59,7 @@ public class LoginPanel extends JPanel{
     public LoginPanel(){
         setLayout(null);
         setSize(479,250);
+        browser.setBounds(0,0,80,30);
         no.setBounds(50,40,80,30);
         password.setBounds(50,100,80,30);
         noi.setBounds(150,40,280,30);
@@ -64,30 +67,45 @@ public class LoginPanel extends JPanel{
         login.setBounds(100,160,80,30);
         jComboBox.setBounds(200,160,80,30);
         exit.setBounds(300,160,80,30);
+        browser.setOpaque(false);
+        browser.setContentAreaFilled(false);
+        browser.setFont(new Font("Comic Sans MS",Font.ITALIC,14));
         no.setOpaque(false);
-        no.setFont(new Font("微软雅黑",Font.BOLD,20));
+        no.setFont(new Font("Comic Sans MS",Font.BOLD,20));
         noi.setOpaque(false);
-        noi.setFont(new Font("微软雅黑",Font.BOLD,20));
+        noi.setFont(new Font("Comic Sans MS",Font.BOLD,20));
         password.setOpaque(false);
-        password.setFont(new Font("微软雅黑",Font.BOLD,16));
+        password.setFont(new Font("Comic Sans MS",Font.BOLD,16));
         passwordi.setOpaque(false);
-        passwordi.setFont(new Font("微软雅黑",Font.BOLD,20));
+        passwordi.setFont(new Font("Comic Sans MS",Font.BOLD,20));
         login.setContentAreaFilled(false);
-        login.setFont(new Font("微软雅黑",Font.BOLD,16));
+        login.setForeground(Color.CYAN);
+        login.setFont(new Font("Comic Sans MS",Font.BOLD,16));
+        exit.setForeground(Color.CYAN);
         exit.setContentAreaFilled(false);
-        exit.setFont(new Font("微软雅黑",Font.BOLD,20));
+        exit.setFont(new Font("Comic Sans MS",Font.BOLD,16));
+        add(browser);
+        browser.setForeground(Color.CYAN);
+        browser.addActionListener(e->{
+            try{
+                SWTest swTest = new SWTest(null);
+            }catch(UnsupportedLookAndFeelException ex){
+                throw new RuntimeException(ex);
+            }
+        });
+        no.setForeground(new Color(0x79FF67));
         add(no);
-        no.setForeground(Color.WHITE);
+        no.setForeground(Color.YELLOW);
         add(password);
-        password.setForeground(Color.WHITE);
+        password.setForeground(Color.YELLOW);
         add(noi);
         noi.setForeground(Color.black);
         add(passwordi);
         passwordi.setForeground(Color.black);
         add(login);
-        login.setForeground(Color.WHITE);
+        login.setForeground(Color.yellow);
         add(jComboBox);
         add(exit);
-        exit.setForeground(Color.WHITE);
+        exit.setForeground(Color.yellow);
     }
 }
