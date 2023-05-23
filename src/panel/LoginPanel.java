@@ -38,6 +38,7 @@ public class LoginPanel extends JPanel{
     JTextField noi = new JTextField();
     JPasswordField passwordi = new JPasswordField();
     JComboBox<String> jComboBox = new JComboBox<>(new String[]{"本地","远程"});
+
     @Override
     protected void paintComponent(Graphics g){
         super.paintComponent(g);

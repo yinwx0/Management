@@ -10,33 +10,23 @@ import java.sql.SQLException;
  * @author Zhai Jinpei
  */
 public class JDBCUtilsTest{
-    JDBCUtils jdbcUtils = new JDBCUtils();
+    JDBCUtils jdbc = Factory.JDBC();
 
     @Test
-    public void getConn() throws SQLException{
-        jdbcUtils.getLocalConn("sy","root","40273939zjpzjp");
+    public void getLocalConn() throws SQLException{
     }
 
     @Test
     public void getRemoteConn(){
-        jdbcUtils.getRemoteConn(
-                "root",
-                "8.130.86.187",
-                22,
-                "111111aA",
-                "root",
-                "",
-                "admin",
-                "127.0.0.1",
-                3306
-        );
+
+        jdbc.getRemoteConn();
     }
 
     @Test
     public void select() throws SQLException{
         Factory.state = 1;
-        Object[][] objects = jdbcUtils.select("select * from stu");
-        Object[][] objects2 = jdbcUtils.select("select * from stu");
+        Object[][] objects = jdbc.select("select * from stu");
+        Object[][] objects2 = jdbc.select("select * from stu");
         p(objects);
         p(objects2);
     }

@@ -4,6 +4,7 @@ import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
 import factory.Factory;
+import lombok.Data;
 
 import java.sql.*;
 import java.util.concurrent.locks.Lock;
@@ -12,7 +13,129 @@ import java.util.concurrent.locks.ReentrantLock;
 /**
  * @author Zhai Jinpei
  */
+@SuppressWarnings("all")
+@Data
 public class JDBCUtils{
+    public static String getDatabase_name(){
+        return database_name;
+    }
+
+    public static void setDatabase_name(String database_name){
+        JDBCUtils.database_name = database_name;
+    }
+
+    public static String getUsername(){
+        return username;
+    }
+
+    public static void setUsername(String username){
+        JDBCUtils.username = username;
+    }
+
+    public static String getPassword(){
+        return password;
+    }
+
+    public static void setPassword(String password){
+        JDBCUtils.password = password;
+    }
+
+    public static String getDh_user(){
+        return dh_user;
+    }
+
+    public static void setDh_user(String dh_user){
+        JDBCUtils.dh_user = dh_user;
+    }
+
+    public static String getDh_ip(){
+        return dh_ip;
+    }
+
+    public static void setDh_ip(String dh_ip){
+        JDBCUtils.dh_ip = dh_ip;
+    }
+
+    public static String getDh_port(){
+        return dh_port;
+    }
+
+    public static void setDh_port(String dh_port){
+        JDBCUtils.dh_port = dh_port;
+    }
+
+    public static String getDh_pwd(){
+        return dh_pwd;
+    }
+
+    public static void setDh_pwd(String dh_pwd){
+        JDBCUtils.dh_pwd = dh_pwd;
+    }
+
+    public static String getDsqluser(){
+        return dsqluser;
+    }
+
+    public static void setDsqluser(String dsqluser){
+        JDBCUtils.dsqluser = dsqluser;
+    }
+
+    public static String getDsqldbname(){
+        return dsqldbname;
+    }
+
+    public static void setDsqldbname(String dsqldbname){
+        JDBCUtils.dsqldbname = dsqldbname;
+    }
+
+    public static String getDsqlpwd(){
+        return dsqlpwd;
+    }
+
+    public static void setDsqlpwd(String dsqlpwd){
+        JDBCUtils.dsqlpwd = dsqlpwd;
+    }
+
+    public static String getDsqlip(){
+        return dsqlip;
+    }
+
+    public static void setDsqlip(String dsqlip){
+        JDBCUtils.dsqlip = dsqlip;
+    }
+
+    public static String getDsqlport(){
+        return dsqlport;
+    }
+
+    public static void setDsqlport(String dsqlport){
+        JDBCUtils.dsqlport = dsqlport;
+    }
+
+    public Session getSession(){
+        return session;
+    }
+
+    public void setSession(Session session){
+        this.session = session;
+    }
+
+    public Lock getLock(){
+        return lock;
+    }
+
+    private static volatile String database_name,
+            username,
+            password,
+            dh_user,
+            dh_ip,
+            dh_port,
+            dh_pwd,
+            dsqluser,
+            dsqldbname,
+            dsqlpwd,
+            dsqlip,
+            dsqlport;
     private Session session = null;
     private final Lock lock = new ReentrantLock();
 
@@ -27,37 +150,30 @@ public class JDBCUtils{
     public JDBCUtils(){
     }
 
-    @Deprecated
-    public Connection getConn() throws SQLException{
-        return DriverManager.getConnection("jdbc:mysql:///sy","root","40273939zjpzjp");
-    }
-
-    public Connection getLocalConn(String database_name,String username,String password) throws SQLException{
+    Connection getLocalConn() throws SQLException{
         return DriverManager.getConnection("jdbc:mysql:///" + database_name,username,password);
     }
 
     /**
-     * @param destination_host_username                "root"
-     * @param destination_host_ip                      "8.130.86.187"
-     * @param destination_host_port                    22
-     * @param destination_host_password                "111111aA"
-     * @param destination_host_mysql_username          "root"
-     * @param destination_host_mysql_database_name     ""
-     * @param destination_host_mysql_database_password "admin"
-     * @param destination_host_mysql_host_ip           "127.0.0.1"
-     * @param destination_host_mysql_host_port         3306
      * @return ssh connection
      */
-    public Connection getRemoteConn(String destination_host_username,String destination_host_ip,int destination_host_port,String destination_host_password,String destination_host_mysql_username,String destination_host_mysql_database_name,String destination_host_mysql_database_password,String destination_host_mysql_host_ip,int destination_host_mysql_host_port){
+    public Connection getRemoteConn(){
         try{
             JSch jsch = new JSch();
-            session = jsch.getSession(destination_host_username,destination_host_ip,destination_host_port);
-            session.setPassword(destination_host_password);
+            session = jsch.getSession(dh_user,dh_ip,Integer.parseInt(dh_port));
+            session.setPassword(dh_pwd);
             session.setConfig("StrictHostKeyChecking","no");
             session.connect();
-            int bindPort = session.setPortForwardingL("localhost",destination_host_port,destination_host_mysql_host_ip,destination_host_mysql_host_port);
+            int bindPort = session.setPortForwardingL(
+                    "localhost",
+                    Integer.parseInt(dh_port),
+                    dsqlip,
+                    Integer.parseInt(dsqlport));
             Class.forName("com.mysql.cj.jdbc.Driver");
-            return DriverManager.getConnection("jdbc:mysql://localhost:" + bindPort + "/" + destination_host_mysql_database_name + "?useSSL=false&autoReconnect=true",destination_host_mysql_username,destination_host_mysql_database_password);
+            return DriverManager.getConnection(
+                    "jdbc:mysql://localhost:" + bindPort + "/" + dsqldbname + "?useSSL=false&autoReconnect=true",
+                    dsqluser,
+                    dsqlpwd);
         }catch(SQLException | JSchException e){
             e.printStackTrace();
         }catch(ClassNotFoundException e){
@@ -70,7 +186,7 @@ public class JDBCUtils{
         lock.lock();
         try{
             if(Factory.state == 1){
-                Connection connection = getRemoteConn("root","8.130.86.187",22,"111111aA","root","sy","admin","127.0.0.1",3306);
+                Connection connection = getRemoteConn();
                 PreparedStatement preparedStatement = connection.prepareStatement(sql,ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_READ_ONLY);
                 for(int j = 1;j <= objects.length;j++)
                     preparedStatement.setObject(j,objects[j - 1]);
@@ -100,7 +216,7 @@ public class JDBCUtils{
                     return null;
                 }
             }else{
-                Connection connection = getLocalConn("sy","root","40273939zjpzjp");
+                Connection connection = getLocalConn();
                 PreparedStatement preparedStatement = connection.prepareStatement(sql,ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_READ_ONLY);
                 for(int j = 1;j <= objects.length;j++)
                     preparedStatement.setObject(j,objects[j - 1]);
@@ -137,7 +253,7 @@ public class JDBCUtils{
         lock.lock();
         try{
             if(Factory.state == 1){
-                Connection connection = getRemoteConn("root","8.130.86.187",22,"111111aA","root","sy","admin","127.0.0.1",3306);
+                Connection connection = getRemoteConn();
                 PreparedStatement preparedStatement = connection.prepareStatement(sql);
                 for(int j = 1;j <= objects.length;j++)
                     preparedStatement.setObject(j,objects[j - 1]);
@@ -147,7 +263,7 @@ public class JDBCUtils{
                 session.disconnect();
                 return i;
             }else{
-                Connection connection = getLocalConn("sy","root","40273939zjpzjp");
+                Connection connection = getLocalConn();
                 PreparedStatement preparedStatement = connection.prepareStatement(sql);
                 for(int j = 1;j <= objects.length;j++)
                     preparedStatement.setObject(j,objects[j - 1]);
