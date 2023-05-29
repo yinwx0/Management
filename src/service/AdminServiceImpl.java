@@ -5,6 +5,7 @@ import factory.Factory;
 import model.Admin;
 import model.SC;
 import model.Stu;
+import panel.ManagePanel;
 
 import javax.swing.*;
 import java.sql.ResultSet;
@@ -425,8 +426,14 @@ public class AdminServiceImpl implements AdminService{
 
     @Override
     public void modifyStu(Stu stu) throws SQLException{
+        if(!(stu.getCa().equals("") || stu.getSex().equals(""))){
+            if(!(ManagePanel.verifyIdCardCheckCode(stu.getCa()) && (stu.getSex().equals("男") || stu.getSex().equals("女")))){
+                JOptionPane.showMessageDialog(null,"invalid input");
+                return;
+            }
+        }
         Object[][] objects = stuDAO.select(
-                "select sno fom stu where sno = ?",
+                "select sno from stu where sno = ?",
                 stu.getSno()
         );
         if(

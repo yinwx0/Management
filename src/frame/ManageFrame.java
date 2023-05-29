@@ -111,25 +111,21 @@ public class ManageFrame extends JFrame{
         managePanel.getModify().addActionListener(e->{
             switch(managePanel.getJComboBox3().getSelectedIndex()){
                 case 0 -> {
-                    if(!(ManagePanel.verifyIdCardCheckCode(managePanel.id()) && (managePanel.sex().equals("男") || managePanel.sex().equals("女")))){
-                        JOptionPane.showMessageDialog(null,"invalid input");
-                    }else{
-                        if(managePanel.sno() != null){
-                            try{
-                                Factory.Serv().modifyStu(
-                                        new Stu(
-                                                managePanel.id(),
-                                                managePanel.sno(),
-                                                managePanel.name(),
-                                                managePanel.sex()
-                                        )
-                                );
-                            }catch(SQLException ex){
+                    if(!managePanel.sno().equals("")){
+                        try{
+                            Factory.Serv().modifyStu(
+                                    new Stu(
+                                            managePanel.id(),
+                                            managePanel.sno(),
+                                            managePanel.name(),
+                                            managePanel.sex()
+                                    )
+                            );
+                        }catch(SQLException ex){
                                 throw new RuntimeException(ex);
                             }
                         }
                         managePanel.getJScrollPane().repaint();
-                    }
                 }
                 case 1 -> {
                     if(
