@@ -12,20 +12,10 @@ public class MainThread extends Thread{
         if(this.isInterrupted()) this.interrupt();
     }
 
-    /**
-     * If this thread was constructed using a separate
-     * {@code Runnable} run object, then that
-     * {@code Runnable} object's {@code run} method is called;
-     * otherwise, this method does nothing and returns.
-     * <p>
-     * Subclasses of {@code Thread} should override this method.
-     *
-     * @see #start()
-     */
     @Override
     public void run(){
-        super.run();
         try{
+            UIManager.setLookAndFeel(LoginFrame.getLookAndFeel());
             new LoginFrame();
         }catch(UnsupportedLookAndFeelException e){
             throw new RuntimeException(e);

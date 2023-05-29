@@ -155,7 +155,6 @@ public class LoginPanel extends JPanel{
 //        add(verify);
 //        add(code);
 //        add(get);
-
         add(login);
         login.setForeground(Color.yellow);
         add(jComboBox);

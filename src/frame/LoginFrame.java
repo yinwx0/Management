@@ -21,12 +21,16 @@ import java.sql.SQLException;
  * @author Zhai Jinpei
  */
 public class LoginFrame extends JFrame{
-    private static volatile LookAndFeel lookAndFeel = new NimbusLookAndFeel();
+    private static LookAndFeel lookAndFeel = new NimbusLookAndFeel();
     private final Thread thread = new MainThread();
+
+    public static LookAndFeel getLookAndFeel(){
+        return lookAndFeel;
+    }
+
     LoginPanel loginPanel = new LoginPanel();
 
     public LoginFrame() throws UnsupportedLookAndFeelException{
-        UIManager.setLookAndFeel(lookAndFeel);
         SwingUtilities.invokeLater(()->{
             setTitle("login");
             setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -51,11 +55,7 @@ public class LoginFrame extends JFrame{
                     case 10 -> lookAndFeel = new LiquidLookAndFeel();
                 }
                 LoginFrame.this.dispose();
-                try{
-                    thread.join();
-                }catch(InterruptedException ex){
-                    throw new RuntimeException(ex);
-                }
+                thread.start();
             });
             loginPanel.getLogin().addActionListener(e->{
                 if(loginPanel.getjComboBox().getSelectedIndex() == 1){
