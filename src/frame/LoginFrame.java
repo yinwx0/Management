@@ -21,7 +21,7 @@ import java.sql.SQLException;
  * @author Zhai Jinpei
  */
 public class LoginFrame extends JFrame{
-    private static LookAndFeel lookAndFeel = new NimbusLookAndFeel();
+    private volatile static LookAndFeel lookAndFeel = new NimbusLookAndFeel();
     private final Thread thread = new MainThread();
 
     public static LookAndFeel getLookAndFeel(){
@@ -58,77 +58,83 @@ public class LoginFrame extends JFrame{
                 thread.start();
             });
             loginPanel.getLogin().addActionListener(e->{
-                if(loginPanel.getjComboBox().getSelectedIndex() == 1){
-                    Factory.state = 1;
-                    PropertiesFrame jFrame = new PropertiesFrame(0);
-                    LoginFrame.this.dispose();
-                    jFrame.getDestination_host_mysql_host_port().addActionListener(e1->{
-                        if(!(
-                                jFrame.getDestination_host_username().getText().equals("") &&
-                                        jFrame.getDestination_host_ip().getText().equals("") &&
-                                        jFrame.getDestination_host_port().getText().equals("") &&
-                                        String.valueOf(jFrame.getDestination_host_password().getPassword()).equals("") &&
-                                        jFrame.getDestination_host_mysql_username().getText().equals("") &&
-                                        jFrame.getDestination_host_mysql_database_name().getText().equals("") &&
-                                        String.valueOf(jFrame.getDestination_host_mysql_database_password().getPassword()).equals("") &&
-                                        jFrame.getDestination_host_mysql_host_ip().getText().equals("") &&
-                                                jFrame.getDestination_host_mysql_host_port().getText().equals("")
-                                )){
-                                    JDBCUtils.setDh_user(jFrame.getDestination_host_username().getText());
-                                    JDBCUtils.setDh_ip(jFrame.getDestination_host_ip().getText());
-                                    JDBCUtils.setDh_port(jFrame.getDestination_host_port().getText());
-                                    JDBCUtils.setDh_pwd(String.valueOf(jFrame.getDestination_host_password().getPassword()));
-                                    JDBCUtils.setDsqluser(jFrame.getDestination_host_mysql_username().getText());
-                                    JDBCUtils.setDsqldbname(jFrame.getDestination_host_mysql_database_name().getText());
-                                    JDBCUtils.setDsqlpwd(String.valueOf(jFrame.getDestination_host_mysql_database_password().getPassword()));
-                                    JDBCUtils.setDsqlip(jFrame.getDestination_host_mysql_host_ip().getText());
-                                    JDBCUtils.setDsqlport(jFrame.getDestination_host_mysql_host_port().getText());
-                                    try{
-                                        if(Factory.Serv().checkLogin(new Admin(loginPanel.no(),loginPanel.password()))){
-                                            JOptionPane.showMessageDialog(this,"Success");
-                                            jFrame.dispose();
-                                            dispose();
-                                            new ManageFrame();
-                                        }else{
-                                            JOptionPane.showMessageDialog(this,"Failed");
+                try{
+                    if(loginPanel.getjComboBox().getSelectedIndex() == 1){
+                        Factory.state = 1;
+                        LoginFrame.this.dispose();
+                        UIManager.setLookAndFeel(lookAndFeel);
+                        PropertiesFrame jFrame = new PropertiesFrame(0);
+                        jFrame.getDestination_host_mysql_host_port().addActionListener(e1->{
+                                    if(!(
+                                            jFrame.getDestination_host_username().getText().equals("") &&
+                                                    jFrame.getDestination_host_ip().getText().equals("") &&
+                                                    jFrame.getDestination_host_port().getText().equals("") &&
+                                                    String.valueOf(jFrame.getDestination_host_password().getPassword()).equals("") &&
+                                                    jFrame.getDestination_host_mysql_username().getText().equals("") &&
+                                                    jFrame.getDestination_host_mysql_database_name().getText().equals("") &&
+                                                    String.valueOf(jFrame.getDestination_host_mysql_database_password().getPassword()).equals("") &&
+                                                    jFrame.getDestination_host_mysql_host_ip().getText().equals("") &&
+                                                    jFrame.getDestination_host_mysql_host_port().getText().equals("")
+                                    )){
+                                        JDBCUtils.setDh_user(jFrame.getDestination_host_username().getText());
+                                        JDBCUtils.setDh_ip(jFrame.getDestination_host_ip().getText());
+                                        JDBCUtils.setDh_port(jFrame.getDestination_host_port().getText());
+                                        JDBCUtils.setDh_pwd(String.valueOf(jFrame.getDestination_host_password().getPassword()));
+                                        JDBCUtils.setDsqluser(jFrame.getDestination_host_mysql_username().getText());
+                                        JDBCUtils.setDsqldbname(jFrame.getDestination_host_mysql_database_name().getText());
+                                        JDBCUtils.setDsqlpwd(String.valueOf(jFrame.getDestination_host_mysql_database_password().getPassword()));
+                                        JDBCUtils.setDsqlip(jFrame.getDestination_host_mysql_host_ip().getText());
+                                        JDBCUtils.setDsqlport(jFrame.getDestination_host_mysql_host_port().getText());
+                                        try{
+                                            if(Factory.Serv().checkLogin(new Admin(loginPanel.no(),loginPanel.password()))){
+                                                JOptionPane.showMessageDialog(this,"Success");
+                                                jFrame.dispose();
+                                                dispose();
+                                                new ManageFrame();
+                                            }else{
+                                                JOptionPane.showMessageDialog(this,"Failed");
+                                            }
+                                        }catch(SQLException | UnsupportedLookAndFeelException ex){
+                                            throw new RuntimeException(ex);
                                         }
-                                    }catch(SQLException ex){
-                                        throw new RuntimeException(ex);
+                                    }else{
+                                        JOptionPane.showMessageDialog(null,"please input");
                                     }
-                                }else{
-                                    JOptionPane.showMessageDialog(null,"please input");
                                 }
-                            }
-                    );
-                }else{
-                    PropertiesFrame jFrame = new PropertiesFrame();
-                    LoginFrame.this.dispose();
-                    jFrame.getPassword().addActionListener(e1->{
-                        if(!(
-                                jFrame.getDatabasename().getText().equals("") &&
-                                        jFrame.getUsername().getText().equals("") &&
-                                        String.valueOf(jFrame.getPassword().getPassword()).equals("")
-                        )
-                        ){
-                            JDBCUtils.setDatabase_name(jFrame.getDatabasename().getText());
-                            JDBCUtils.setUsername(jFrame.getUsername().getText());
-                            JDBCUtils.setPassword(String.valueOf(jFrame.getPassword().getPassword()));
-                                    try{
-                                        if(Factory.Serv().checkLogin(new Admin(loginPanel.no(),loginPanel.password()))){
-                                            JOptionPane.showMessageDialog(null,"Success");
-                                            jFrame.dispose();
-                                            new ManageFrame();
-                                        }else{
-                                            JOptionPane.showMessageDialog(null,"Failed");
+                        );
+                    }else{
+                        LoginFrame.this.dispose();
+                        UIManager.setLookAndFeel(lookAndFeel);
+                        PropertiesFrame jFrame = new PropertiesFrame();
+                        jFrame.getPassword().addActionListener(e1->{
+                                    if(!(
+                                            jFrame.getDatabasename().getText().equals("") &&
+                                                    jFrame.getUsername().getText().equals("") &&
+                                                    String.valueOf(jFrame.getPassword().getPassword()).equals("")
+                                    )
+                                    ){
+                                        JDBCUtils.setDatabase_name(jFrame.getDatabasename().getText());
+                                        JDBCUtils.setUsername(jFrame.getUsername().getText());
+                                        JDBCUtils.setPassword(String.valueOf(jFrame.getPassword().getPassword()));
+                                        try{
+                                            if(Factory.Serv().checkLogin(new Admin(loginPanel.no(),loginPanel.password()))){
+                                                JOptionPane.showMessageDialog(null,"Success");
+                                                jFrame.dispose();
+                                                new ManageFrame();
+                                            }else{
+                                                JOptionPane.showMessageDialog(null,"Failed");
+                                            }
+                                        }catch(SQLException | UnsupportedLookAndFeelException ex){
+                                            throw new RuntimeException(ex);
                                         }
-                                    }catch(SQLException ex){
-                                        throw new RuntimeException(ex);
+                                    }else{
+                                        JOptionPane.showMessageDialog(null,"please input");
                                     }
-                                }else{
-                                    JOptionPane.showMessageDialog(null,"please input");
                                 }
-                            }
-                    );
+                        );
+                    }
+                }catch(UnsupportedLookAndFeelException ex){
+                    throw new RuntimeException(ex);
                 }
             });
             loginPanel.getExit().addActionListener(e->System.exit(0));

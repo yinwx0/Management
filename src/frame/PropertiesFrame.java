@@ -37,51 +37,55 @@ public class PropertiesFrame extends JFrame{
     JLabel d_sql_port = new JLabel("目标主机mysql端口");
     JTextField destination_host_mysql_host_port = new JTextField();
 
-    public PropertiesFrame(){
-        setBounds(500,200,400,120);
-        setVisible(true);
-        setResizable(false);
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        jPanel.setSize(400,120);
-        jPanel.setLayout(new GridLayout(3,2));
-        jPanel.add(data);
-        jPanel.add(databasename);
-        jPanel.add(user);
-        jPanel.add(username);
-        jPanel.add(pwd);
-        jPanel.add(password);
-        setContentPane(jPanel);
-        jPanel.setVisible(true);
-    }
-
-    public PropertiesFrame(int sta){
-        if(sta == 0){
-            setBounds(500,200,400,360);
+    public PropertiesFrame() throws UnsupportedLookAndFeelException{
+        SwingUtilities.invokeLater(()->{
+            setBounds(500,200,400,120);
             setVisible(true);
             setResizable(false);
             setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-            jPanel.setSize(400,360);
-            jPanel.setLayout(new GridLayout(9,2));
-            jPanel.add(dh_user);
-            jPanel.add(destination_host_username);
-            jPanel.add(dh_ip);
-            jPanel.add(destination_host_ip);
-            jPanel.add(dh_port);
-            jPanel.add(destination_host_port);
-            jPanel.add(dh_pwd);
-            jPanel.add(destination_host_password);
-            jPanel.add(d_sql_user);
-            jPanel.add(destination_host_mysql_username);
-            jPanel.add(d_sql_dbname);
-            jPanel.add(destination_host_mysql_database_name);
-            jPanel.add(d_sql_pwd);
-            jPanel.add(destination_host_mysql_database_password);
-            jPanel.add(d_sql_ip);
-            jPanel.add(destination_host_mysql_host_ip);
-            jPanel.add(d_sql_port);
-            jPanel.add(destination_host_mysql_host_port);
+            jPanel.setSize(400,120);
+            jPanel.setLayout(new GridLayout(3,2));
+            jPanel.add(data);
+            jPanel.add(databasename);
+            jPanel.add(user);
+            jPanel.add(username);
+            jPanel.add(pwd);
+            jPanel.add(password);
             setContentPane(jPanel);
             jPanel.setVisible(true);
-        }
+        });
+    }
+
+    public PropertiesFrame(int sta) throws UnsupportedLookAndFeelException{
+        SwingUtilities.invokeLater(()->{
+            if(sta == 0){
+                setBounds(500,200,400,360);
+                setVisible(true);
+                setResizable(false);
+                setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+                jPanel.setSize(400,360);
+                jPanel.setLayout(new GridLayout(9,2));
+                jPanel.add(dh_user);
+                jPanel.add(destination_host_username);
+                jPanel.add(dh_ip);
+                jPanel.add(destination_host_ip);
+                jPanel.add(dh_port);
+                jPanel.add(destination_host_port);
+                jPanel.add(dh_pwd);
+                jPanel.add(destination_host_password);
+                jPanel.add(d_sql_user);
+                jPanel.add(destination_host_mysql_username);
+                jPanel.add(d_sql_dbname);
+                jPanel.add(destination_host_mysql_database_name);
+                jPanel.add(d_sql_pwd);
+                jPanel.add(destination_host_mysql_database_password);
+                jPanel.add(d_sql_ip);
+                jPanel.add(destination_host_mysql_host_ip);
+                jPanel.add(d_sql_port);
+                jPanel.add(destination_host_mysql_host_port);
+                setContentPane(jPanel);
+                jPanel.setVisible(true);
+            }
+        });
     }
 }
