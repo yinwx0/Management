@@ -1,33 +1,62 @@
 package frame;
 
-import com.formdev.flatlaf.intellijthemes.materialthemeuilite.FlatGitHubContrastIJTheme;
+import com.birosoft.liquid.LiquidLookAndFeel;
+import com.formdev.flatlaf.demo.LookAndFeelsComboBox;
+import com.formdev.flatlaf.intellijthemes.FlatCobalt2IJTheme;
+import com.formdev.flatlaf.intellijthemes.FlatCyanLightIJTheme;
+import com.formdev.flatlaf.intellijthemes.FlatGruvboxDarkHardIJTheme;
+import com.formdev.flatlaf.intellijthemes.FlatHiberbeeDarkIJTheme;
+import com.formdev.flatlaf.intellijthemes.materialthemeuilite.*;
 import factory.Factory;
+import main.MainThread;
 import model.Admin;
 import panel.LoginPanel;
 import utils.JDBCUtils;
 
 import javax.swing.*;
+import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 import java.sql.SQLException;
 
 /**
  * @author Zhai Jinpei
  */
 public class LoginFrame extends JFrame{
-    public static void main(String[] args) throws UnsupportedLookAndFeelException{
-        new LoginFrame();
-    }
+    private static volatile LookAndFeel lookAndFeel = new NimbusLookAndFeel();
+    private final Thread thread = new MainThread();
+    LoginPanel loginPanel = new LoginPanel();
 
     public LoginFrame() throws UnsupportedLookAndFeelException{
-        UIManager.setLookAndFeel(new FlatGitHubContrastIJTheme());
+        UIManager.setLookAndFeel(lookAndFeel);
         SwingUtilities.invokeLater(()->{
             setTitle("login");
             setDefaultCloseOperation(EXIT_ON_CLOSE);
             setResizable(false);
             setVisible(true);
             setBounds(500,300,479,250);
-            LoginPanel loginPanel = new LoginPanel();
             setContentPane(loginPanel);
             loginPanel.setVisible(true);
+            LookAndFeelsComboBox comboBox = loginPanel.getComboBox();
+            comboBox.addActionListener(e->{
+                switch(comboBox.getSelectedIndex()){
+                    case 0 -> lookAndFeel = new NimbusLookAndFeel();
+                    case 1 -> lookAndFeel = new FlatGitHubContrastIJTheme();
+                    case 2 -> lookAndFeel = new FlatGitHubDarkContrastIJTheme();
+                    case 3 -> lookAndFeel = new FlatGitHubDarkIJTheme();
+                    case 4 -> lookAndFeel = new FlatGitHubIJTheme();
+                    case 5 -> lookAndFeel = new FlatHiberbeeDarkIJTheme();
+                    case 6 -> lookAndFeel = new FlatNightOwlContrastIJTheme();
+                    case 7 -> lookAndFeel = new FlatGruvboxDarkHardIJTheme();
+                    case 8 -> lookAndFeel = new FlatCyanLightIJTheme();
+                    case 9 -> lookAndFeel = new FlatCobalt2IJTheme();
+                    case 10 -> lookAndFeel = new LiquidLookAndFeel();
+                }
+                LoginFrame.this.dispose();
+                try{
+                    thread.join();
+                }catch(InterruptedException ex){
+                    throw new RuntimeException(ex);
+                }
+            });
             loginPanel.getLogin().addActionListener(e->{
                 if(loginPanel.getjComboBox().getSelectedIndex() == 1){
                     Factory.state = 1;
@@ -86,12 +115,11 @@ public class LoginFrame extends JFrame{
                             JDBCUtils.setPassword(String.valueOf(jFrame.getPassword().getPassword()));
                                     try{
                                         if(Factory.Serv().checkLogin(new Admin(loginPanel.no(),loginPanel.password()))){
-                                            JOptionPane.showMessageDialog(this,"Success");
+                                            JOptionPane.showMessageDialog(null,"Success");
                                             jFrame.dispose();
-                                            dispose();
                                             new ManageFrame();
                                         }else{
-                                            JOptionPane.showMessageDialog(this,"Failed");
+                                            JOptionPane.showMessageDialog(null,"Failed");
                                         }
                                     }catch(SQLException ex){
                                         throw new RuntimeException(ex);

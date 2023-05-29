@@ -59,7 +59,7 @@ public class AdminServiceImpl implements AdminService{
                         Objects.equals(stu.getSex(),"")
         ){
             return stuDAO.select(
-                    " select * from stu where Ca = ?",
+                    " select * from stu where ca = ?",
                     stu.getCa()
             );
         }else if(
@@ -85,7 +85,7 @@ public class AdminServiceImpl implements AdminService{
                         Objects.equals(stu.getSex(),"")
         ){
             return stuDAO.select(
-                    " select * from stu where sno = ? and Ca = ?",
+                    " select * from stu where sno = ? and ca = ?",
                     stu.getSno(),
                     stu.getCa()
             );
@@ -94,7 +94,7 @@ public class AdminServiceImpl implements AdminService{
                         Objects.equals(stu.getSex(),"")
         ){
             return stuDAO.select(
-                    " select * from stu where name = ? and Ca = ?",
+                    " select * from stu where name = ? and ca = ?",
                     stu.getName(),
                     stu.getCa()
             );
@@ -130,14 +130,14 @@ public class AdminServiceImpl implements AdminService{
                         Objects.equals(stu.getName(),"")
         ){
             return stuDAO.select(
-                    " select * from stu where sex = ? and Ca = ?",
+                    " select * from stu where sex = ? and ca = ?",
                     stu.getSex(),
                     stu.getCa()
             );
         }else if(
                 Objects.equals(stu.getSno(),"")
         ){
-            return stuDAO.select(" select * from stu where Ca = ? and name = ? and sex = ?",
+            return stuDAO.select(" select * from stu where ca = ? and name = ? and sex = ?",
                     stu.getCa(),
                     stu.getName(),
                     stu.getSex()
@@ -146,7 +146,7 @@ public class AdminServiceImpl implements AdminService{
                 Objects.equals(stu.getName(),"")
         ){
             return stuDAO.select(
-                    " select * from stu where sno = ? and Ca = ? and sex = ?",
+                    " select * from stu where sno = ? and ca = ? and sex = ?",
                     stu.getSno(),
                     stu.getCa(),
                     stu.getSex()
@@ -164,14 +164,14 @@ public class AdminServiceImpl implements AdminService{
                 Objects.equals(stu.getSex(),"")
         ){
             return stuDAO.select(
-                    " select * from stu where sno = ? and name = ? and Ca = ?",
+                    " select * from stu where sno = ? and name = ? and ca = ?",
                     stu.getSno(),
                     stu.getName(),
                     stu.getCa()
             );
         }else{
             return stuDAO.select(
-                    " select * from stu where sno = ? and name = ? and Ca = ? and  sex = ?",
+                    " select * from stu where sno = ? and name = ? and ca = ? and  sex = ?",
                     stu.getSno(),
                     stu.getName(),
                     stu.getCa(),
@@ -385,7 +385,7 @@ public class AdminServiceImpl implements AdminService{
                         !stu.getCa().equals("")
         ){
             int i = stuDAO.insert(
-                    "insert into stu(Ca,sno,name,sex) values(?,?,?,?)",
+                    "insert into stu(ca,sno,name,sex) values(?,?,?,?)",
                     stu.getCa(),
                     stu.getSno(),
                     stu.getName(),
@@ -466,7 +466,7 @@ public class AdminServiceImpl implements AdminService{
                     stu.getName().equals("")
             ){
                 stuDAO.modify(
-                        "update stu set sex = ?,Ca = ? where sno = ?",
+                        "update stu set sex = ?,ca = ? where sno = ?",
                         stu.getSex(),
                         stu.getCa(),
                         stu.getSno()
@@ -475,7 +475,7 @@ public class AdminServiceImpl implements AdminService{
                     stu.getSex().equals("")
             ){
                 stuDAO.modify(
-                        "update stu set Ca = ?,name = ? where sno = ?",
+                        "update stu set ca = ?,name = ? where sno = ?",
                         stu.getCa(),
                         stu.getName(),
                         stu.getSno()
@@ -524,7 +524,7 @@ public class AdminServiceImpl implements AdminService{
                         Objects.equals(stu.getSex(),"")
         ){
             stuDAO.delete(
-                    "delete from stu where Ca = ?",
+                    "delete from stu where ca = ?",
                     stu.getCa()
             );
         }else if(
@@ -549,7 +549,7 @@ public class AdminServiceImpl implements AdminService{
                         Objects.equals(stu.getSex(),"")
         ){
             stuDAO.delete(
-                    "delete from stu where sno = ? and Ca = ?",
+                    "delete from stu where sno = ? and ca = ?",
                     stu.getSno(),
                     stu.getCa()
             );
@@ -558,7 +558,7 @@ public class AdminServiceImpl implements AdminService{
                         Objects.equals(stu.getSex(),"")
         ){
             stuDAO.delete(
-                    "delete from stu where name = ? and Ca = ?",
+                    "delete from stu where name = ? and ca = ?",
                     stu.getName(),
                     stu.getCa()
             );
@@ -593,7 +593,7 @@ public class AdminServiceImpl implements AdminService{
                         Objects.equals(stu.getName(),"")
         ){
             stuDAO.delete(
-                    "delete from stu where Ca = ? and sex = ?",
+                    "delete from stu where ca = ? and sex = ?",
                     stu.getCa(),
                     stu.getSex()
             );
@@ -601,7 +601,7 @@ public class AdminServiceImpl implements AdminService{
                 Objects.equals(stu.getSno(),"")
         ){
             stuDAO.delete(
-                    "delete from stu where Ca = ? and name = ? and sex = ?",
+                    "delete from stu where ca = ? and name = ? and sex = ?",
                     stu.getCa(),
                     stu.getName(),
                     stu.getSex()
@@ -610,7 +610,7 @@ public class AdminServiceImpl implements AdminService{
                 Objects.equals(stu.getName(),"")
         ){
             stuDAO.delete(
-                    "delete from stu where sno = ? and Ca = ? and sex = ?",
+                    "delete from stu where sno = ? and ca = ? and sex = ?",
                     stu.getSno(),
                     stu.getCa(),
                     stu.getSex()
@@ -619,7 +619,7 @@ public class AdminServiceImpl implements AdminService{
                 Objects.equals(stu.getCa(),"")
         ){
             stuDAO.delete(
-                    "delete from dtu where sno = ? and sex = ? and name = ?",
+                    "delete from stu where sno = ? and sex = ? and name = ?",
                     stu.getSno(),
                     stu.getSex(),
                     stu.getName()
@@ -628,14 +628,14 @@ public class AdminServiceImpl implements AdminService{
                 Objects.equals(stu.getSex(),"")
         ){
             stuDAO.delete(
-                    "delete from dtu where sno = ? and Ca = ? and name = ?",
+                    "delete from stu where sno = ? and ca = ? and name = ?",
                     stu.getSno(),
                     stu.getCa(),
                     stu.getName()
             );
         }else{
             stuDAO.delete(
-                    "delete from dtu where sno = ? and Ca = ? and name = ? and sex = ?",
+                    "delete from stu where sno = ? and ca = ? and name = ? and sex = ?",
                     stu.getSno(),
                     stu.getCa(),
                     stu.getName(),
