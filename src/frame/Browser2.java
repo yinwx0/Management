@@ -17,7 +17,7 @@ public class Browser2 extends JPanel{
         JPanel webBrowserPanel = new JPanel(new BorderLayout());
         webBrowserPanel.setBorder(BorderFactory.createTitledBorder("Native Web Browser component"));
         final JWebBrowser webBrowser = new JWebBrowser();
-        webBrowser.navigate("http://www.baidu.com");
+        webBrowser.navigate("https://www.baidu.com");
         webBrowserPanel.add(webBrowser,BorderLayout.CENTER);
         add(webBrowserPanel,BorderLayout.CENTER);
         // Create an additional bar allowing to show/hide the menu bar of the web browser.

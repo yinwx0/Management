@@ -56,8 +56,15 @@ public class ManagePanel extends JPanel{
     String[] title4 = new String[]{"sno","all score"};
     String[] title5 = new String[]{"cno","avg score"};
     JTable jTable = new JTable(new DefaultTableModel(new Object[100][],title1));
-    JScrollPane jScrollPane = new JScrollPane(jTable);
+    private JScrollPane jScrollPane = new JScrollPane(jTable);
 
+    public void setjTable(JTable jTable){
+        this.jTable = jTable;
+    }
+
+    public void setjScrollPane(JScrollPane jScrollPane){
+        this.jScrollPane = jScrollPane;
+    }
 
     public JButton getSelect(){
         return select;

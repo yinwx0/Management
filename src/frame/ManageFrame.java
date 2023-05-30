@@ -81,6 +81,7 @@ public class ManageFrame extends JFrame{
                         ){
                             JOptionPane.showMessageDialog(null,"invalid input");
                         }else{
+
                             try{
                                 Factory.Serv().insertStu(
                                         new Stu(
@@ -189,6 +190,7 @@ public class ManageFrame extends JFrame{
                                                 managePanel.cno()
                                         )
                                 );
+
                             }
                         }catch(SQLException ex){
                             throw new RuntimeException(ex);
