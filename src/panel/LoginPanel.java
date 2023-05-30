@@ -2,7 +2,6 @@ package panel;
 
 
 import com.formdev.flatlaf.demo.LookAndFeelsComboBox;
-import com.formdev.flatlaf.intellijthemes.FlatHiberbeeDarkIJTheme;
 import frame.SWTest;
 import lombok.Data;
 
@@ -71,7 +70,6 @@ public class LoginPanel extends JPanel{
     }
 
     public LoginPanel() throws UnsupportedLookAndFeelException{
-        UIManager.setLookAndFeel(new FlatHiberbeeDarkIJTheme());
         comboBox.addLookAndFeel("NimbusLookAndFeel","javax.swing.plaf.nimbus.NimbusLookAndFeel");
         comboBox.addLookAndFeel("FlatGitHubContrastIJTheme","com.formdev.flatlaf.intellijthemes.materialthemeuilite.FlatGitHubContrastIJTheme");
         comboBox.addLookAndFeel("FlatGitHubDarkContrastIJTheme","com.formdev.flatlaf.intellijthemes.materialthemeuilite.FlatGitHubDarkContrastIJTheme");
@@ -83,6 +81,7 @@ public class LoginPanel extends JPanel{
         comboBox.addLookAndFeel("FlatCyanLightIJTheme","com.formdev.flatlaf.intellijthemes.FlatCyanLightIJTheme");
         comboBox.addLookAndFeel("FlatCobalt2IJTheme","com.formdev.flatlaf.intellijthemes.FlatCobalt2IJTheme");
         comboBox.addLookAndFeel("LiquidTheme","com.birosoft.liquid.LiquidLookAndFeel");
+        //TODO: add more lookandfeels
         setLayout(null);
         setSize(479,250);
         browser.setBounds(-15,0,65,30);

@@ -22,7 +22,7 @@ import java.sql.SQLException;
  */
 public class LoginFrame extends JFrame{
     private volatile static LookAndFeel lookAndFeel = new NimbusLookAndFeel();
-    private Thread thread = new MainThread();
+    private final Thread thread = new MainThread();
 
     public static LookAndFeel getLookAndFeel(){
         return lookAndFeel;
@@ -53,6 +53,7 @@ public class LoginFrame extends JFrame{
                     case 8 -> lookAndFeel = new FlatCyanLightIJTheme();
                     case 9 -> lookAndFeel = new FlatCobalt2IJTheme();
                     case 10 -> lookAndFeel = new LiquidLookAndFeel();
+                    //TODO:add corresponding LookAndFeel instance
                 }
                 LoginFrame.this.dispose();
                 thread.start();
