@@ -10,7 +10,6 @@ import java.sql.SQLException;
  * @author Zhai Jinpei
  */
 public interface AdminService{
-    int state = 0;
 
 
     boolean checkLogin(Admin admin) throws SQLException;

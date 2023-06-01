@@ -23,17 +23,17 @@ public class Factory{
     }
 
     @Contract(" -> new")
-    public static @NotNull AdminDAOImpl stuImpl() throws SQLException{
+    public static @NotNull AdminDAOImpl stuImpl(){
         return new StuDAOImpl();
     }
 
     @Contract(" -> new")
-    public static @NotNull AdminDAOImpl scImpl() throws SQLException{
+    public static @NotNull AdminDAOImpl scImpl(){
         return new ScDAOImpl();
     }
 
     @Contract(" -> new")
-    public static @NotNull AdminDAOImpl couImpl() throws SQLException{
+    public static @NotNull AdminDAOImpl couImpl(){
         return new CouDAOImpl();
     }
 

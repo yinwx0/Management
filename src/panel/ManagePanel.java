@@ -50,14 +50,21 @@ public class ManagePanel extends JPanel{
     JTextField idt = new JTextField();
     JTextField nat = new JTextField();
     JTextField st = new JTextField();
-    String[] title1 = new String[]{"sno","cno","score"};
+    String[] title1 = new String[]{"id","sno","cno","score"};
     String[] title2 = new String[]{"cno","avg score"};
-    String[] title3 = new String[]{"ca","sno","name","sex"};
+    String[] title3 = new String[]{"id","ca","sno","name","sex"};
     String[] title4 = new String[]{"sno","all score"};
     String[] title5 = new String[]{"cno","avg score"};
     JTable jTable = new JTable(new DefaultTableModel(new Object[100][],title1));
-    JScrollPane jScrollPane = new JScrollPane(jTable);
+    private JScrollPane jScrollPane = new JScrollPane(jTable);
 
+    public void setjTable(JTable jTable){
+        this.jTable = jTable;
+    }
+
+    public void setjScrollPane(JScrollPane jScrollPane){
+        this.jScrollPane = jScrollPane;
+    }
 
     public JButton getSelect(){
         return select;

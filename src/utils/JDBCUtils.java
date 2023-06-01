@@ -150,7 +150,7 @@ public class JDBCUtils{
     public JDBCUtils(){
     }
 
-    Connection getLocalConn() throws SQLException{
+    public Connection getLocalConn() throws SQLException{
         return DriverManager.getConnection("jdbc:mysql:///" + database_name,username,password);
     }
 

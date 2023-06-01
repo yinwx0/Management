@@ -4,12 +4,13 @@ import com.formdev.flatlaf.intellijthemes.materialthemeuilite.FlatGitHubContrast
 import panel.MenuPanel;
 
 import javax.swing.*;
+import java.io.IOException;
 
 /**
  * @author Zhai Jinpei
  */
 public class MenuFrame extends JFrame{
-    public static void main(String[] args){
+    public static void main(String[] args) throws IOException{
         SwingUtilities.invokeLater(()->{
             try{
                 new MenuFrame();
@@ -23,7 +24,7 @@ public class MenuFrame extends JFrame{
         UIManager.setLookAndFeel(new FlatGitHubContrastIJTheme());
         setBounds(500,200,600,600);
         setVisible(true);
-        JPanel panel = new MenuPanel();
+        MenuPanel panel = new MenuPanel();
         setContentPane(panel);
         panel.setVisible(true);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
